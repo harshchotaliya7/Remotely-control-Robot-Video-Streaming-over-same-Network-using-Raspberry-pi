@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Stream</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        function set_gpio(value) {
+            $.ajax({
+                type: 'POST',
+                url: '/gpio',
+                data: {'value': value},
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Video Stream</h1>
+    <img id="video" src="{{ url_for('video_feed') }}" width="640" height="480">
+    <button onclick="set_gpio(0)">forward</button>
+    <button onclick="set_gpio(1)">backward</button>
+    <button onclick="set_gpio(2)">stop</button>
+    <script type="text/javascript">
+        var video = document.getElementById("video");
+        video.addEventListener("error", function() {
+            alert("Error loading video stream. Please refresh the page.");
+        });
+    </script>
+</body>
+</html>
+
